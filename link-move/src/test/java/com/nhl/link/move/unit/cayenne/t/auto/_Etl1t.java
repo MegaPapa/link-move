@@ -1,6 +1,10 @@
 package com.nhl.link.move.unit.cayenne.t.auto;
 
-import org.apache.cayenne.CayenneDataObject;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import org.apache.cayenne.BaseDataObject;
 import org.apache.cayenne.exp.Property;
 
 /**
@@ -9,7 +13,7 @@ import org.apache.cayenne.exp.Property;
  * since it may be overwritten next time code is regenerated.
  * If you need to make any customizations, please use subclass.
  */
-public abstract class _Etl1t extends CayenneDataObject {
+public abstract class _Etl1t extends BaseDataObject {
 
     private static final long serialVersionUID = 1L; 
 
@@ -19,25 +23,102 @@ public abstract class _Etl1t extends CayenneDataObject {
     public static final Property<String> DESCRIPTION = Property.create("description", String.class);
     public static final Property<String> NAME = Property.create("name", String.class);
 
+    protected Integer age;
+    protected String description;
+    protected String name;
+
+
     public void setAge(Integer age) {
-        writeProperty("age", age);
+        beforePropertyWrite("age", this.age, age);
+        this.age = age;
     }
+
     public Integer getAge() {
-        return (Integer)readProperty("age");
+        beforePropertyRead("age");
+        return this.age;
     }
 
     public void setDescription(String description) {
-        writeProperty("description", description);
+        beforePropertyWrite("description", this.description, description);
+        this.description = description;
     }
+
     public String getDescription() {
-        return (String)readProperty("description");
+        beforePropertyRead("description");
+        return this.description;
     }
 
     public void setName(String name) {
-        writeProperty("name", name);
+        beforePropertyWrite("name", this.name, name);
+        this.name = name;
     }
+
     public String getName() {
-        return (String)readProperty("name");
+        beforePropertyRead("name");
+        return this.name;
+    }
+
+    @Override
+    public Object readPropertyDirectly(String propName) {
+        if(propName == null) {
+            throw new IllegalArgumentException();
+        }
+
+        switch(propName) {
+            case "age":
+                return this.age;
+            case "description":
+                return this.description;
+            case "name":
+                return this.name;
+            default:
+                return super.readPropertyDirectly(propName);
+        }
+    }
+
+    @Override
+    public void writePropertyDirectly(String propName, Object val) {
+        if(propName == null) {
+            throw new IllegalArgumentException();
+        }
+
+        switch (propName) {
+            case "age":
+                this.age = (Integer)val;
+                break;
+            case "description":
+                this.description = (String)val;
+                break;
+            case "name":
+                this.name = (String)val;
+                break;
+            default:
+                super.writePropertyDirectly(propName, val);
+        }
+    }
+
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        writeSerialized(out);
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        readSerialized(in);
+    }
+
+    @Override
+    protected void writeState(ObjectOutputStream out) throws IOException {
+        super.writeState(out);
+        out.writeObject(this.age);
+        out.writeObject(this.description);
+        out.writeObject(this.name);
+    }
+
+    @Override
+    protected void readState(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        super.readState(in);
+        this.age = (Integer)in.readObject();
+        this.description = (String)in.readObject();
+        this.name = (String)in.readObject();
     }
 
 }

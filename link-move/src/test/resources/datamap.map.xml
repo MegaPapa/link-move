@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<data-map xmlns="http://cayenne.apache.org/schema/9/modelMap"
+<data-map xmlns="http://cayenne.apache.org/schema/10/modelMap"
 	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:schemaLocation="http://cayenne.apache.org/schema/9/modelMap http://cayenne.apache.org/schema/9/modelMap.xsd"
-	 project-version="9">
+	 xsi:schemaLocation="http://cayenne.apache.org/schema/10/modelMap http://cayenne.apache.org/schema/10/modelMap.xsd"
+	 project-version="10">
 	<property name="defaultPackage" value="com.nhl.link.move.unit.cayenne"/>
 	<property name="defaultSchema" value="utest"/>
 	<db-entity name="etl1" schema="utest">
@@ -62,10 +62,10 @@
 	<db-relationship name="e3s" source="etl2" target="etl3" toMany="true">
 		<db-attribute-pair source="id" target="e2_id"/>
 	</db-relationship>
-	<db-relationship name="e2" source="etl3" target="etl2" toMany="false">
+	<db-relationship name="e2" source="etl3" target="etl2">
 		<db-attribute-pair source="e2_id" target="id"/>
 	</db-relationship>
-	<db-relationship name="e5" source="etl3" target="etl5" toMany="false">
+	<db-relationship name="e5" source="etl3" target="etl5">
 		<db-attribute-pair source="e5_id" target="id"/>
 	</db-relationship>
 	<db-relationship name="e2s" source="etl5" target="etl3" toMany="true">

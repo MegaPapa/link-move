@@ -1,6 +1,10 @@
 package com.nhl.link.move.unit.cayenne.t.auto;
 
-import org.apache.cayenne.CayenneDataObject;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import org.apache.cayenne.BaseDataObject;
 import org.apache.cayenne.exp.Property;
 
 /**
@@ -9,7 +13,7 @@ import org.apache.cayenne.exp.Property;
  * since it may be overwritten next time code is regenerated.
  * If you need to make any customizations, please use subclass.
  */
-public abstract class _Etl7t extends CayenneDataObject {
+public abstract class _Etl7t extends BaseDataObject {
 
     private static final long serialVersionUID = 1L; 
 
@@ -19,25 +23,102 @@ public abstract class _Etl7t extends CayenneDataObject {
     public static final Property<String> LAST_NAME = Property.create("lastName", String.class);
     public static final Property<String> SEX = Property.create("sex", String.class);
 
+    protected String firstName;
+    protected String lastName;
+    protected String sex;
+
+
     public void setFirstName(String firstName) {
-        writeProperty("firstName", firstName);
+        beforePropertyWrite("firstName", this.firstName, firstName);
+        this.firstName = firstName;
     }
+
     public String getFirstName() {
-        return (String)readProperty("firstName");
+        beforePropertyRead("firstName");
+        return this.firstName;
     }
 
     public void setLastName(String lastName) {
-        writeProperty("lastName", lastName);
+        beforePropertyWrite("lastName", this.lastName, lastName);
+        this.lastName = lastName;
     }
+
     public String getLastName() {
-        return (String)readProperty("lastName");
+        beforePropertyRead("lastName");
+        return this.lastName;
     }
 
     public void setSex(String sex) {
-        writeProperty("sex", sex);
+        beforePropertyWrite("sex", this.sex, sex);
+        this.sex = sex;
     }
+
     public String getSex() {
-        return (String)readProperty("sex");
+        beforePropertyRead("sex");
+        return this.sex;
+    }
+
+    @Override
+    public Object readPropertyDirectly(String propName) {
+        if(propName == null) {
+            throw new IllegalArgumentException();
+        }
+
+        switch(propName) {
+            case "firstName":
+                return this.firstName;
+            case "lastName":
+                return this.lastName;
+            case "sex":
+                return this.sex;
+            default:
+                return super.readPropertyDirectly(propName);
+        }
+    }
+
+    @Override
+    public void writePropertyDirectly(String propName, Object val) {
+        if(propName == null) {
+            throw new IllegalArgumentException();
+        }
+
+        switch (propName) {
+            case "firstName":
+                this.firstName = (String)val;
+                break;
+            case "lastName":
+                this.lastName = (String)val;
+                break;
+            case "sex":
+                this.sex = (String)val;
+                break;
+            default:
+                super.writePropertyDirectly(propName, val);
+        }
+    }
+
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        writeSerialized(out);
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        readSerialized(in);
+    }
+
+    @Override
+    protected void writeState(ObjectOutputStream out) throws IOException {
+        super.writeState(out);
+        out.writeObject(this.firstName);
+        out.writeObject(this.lastName);
+        out.writeObject(this.sex);
+    }
+
+    @Override
+    protected void readState(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        super.readState(in);
+        this.firstName = (String)in.readObject();
+        this.lastName = (String)in.readObject();
+        this.sex = (String)in.readObject();
     }
 
 }
