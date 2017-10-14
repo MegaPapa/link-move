@@ -86,11 +86,6 @@
 				</exclusions>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.cayenne</groupId>
-				<artifactId>cayenne-java8</artifactId>
-				<version>${cayenne-version}</version>
-			</dependency>
-			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>4.11</version>
